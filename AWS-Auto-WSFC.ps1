@@ -38,7 +38,7 @@ $ClusterIPResources.ForEach( { (Get-ClusterResource -Name "$_").Name = Get-Clust
 $ClusterNodes.ForEach( { Get-Cluster -Name $WSFCClusterName | Get-ClusterResource -Name ([String]$ClusterNodesEC2IPsHashTable.$_[1]) | Set-ClusterOwnerNode -Owners ([String]$_) })
 
 # Set dependencies for the cluster name object to be either/or for the node IP addresses
-Set-ClusterResourceDependency -Resource "Cluster Name" -Dependency ("[" + ($ClusterNodes.ForEach( { $ClusterNodesEC2IPsHashTable[$_][1] } ) -join '] or [') + "]")
+Set-ClusterResourceDependency -Resource $WSFCClusterName -Dependency ("[" + ($ClusterNodes.ForEach( { $ClusterNodesEC2IPsHashTable[$_][1] } ) -join '] or [') + "]")
 
 # Set Cluster Name Object Permissions on Default AD Computers Container
 
